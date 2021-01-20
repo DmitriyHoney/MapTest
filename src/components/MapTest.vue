@@ -20,6 +20,16 @@ export default {
         [37.714929, 55.837369],
         [37.74, 55.85],
         [37.75, 55.837369],
+        [37.75, 55.937369],
+        [37.75, 55.437369],
+        [37.75, 55.337369],
+        [37.75, 55.537369],
+        [37.75, 55.037369],
+        [37.75, 55.37369],
+        [37.75, 56.837369],
+        [37.75, 59.837369],
+        [37.75, 58.837369],
+        [37.75, 59.837369],
     ],
 
     Map: null
@@ -32,9 +42,6 @@ export default {
 
   watch: {
       driversCoords(val) {
-        // this.cluster.removeAll()
-        // let placemarks = this.driversCoords.map((coords, idx) => this.createPlacemark(coords, `text-${idx}`, idx))
-        // this.cluster.add(placemarks)
         console.log('val');
         if (!this.objectManager) return false
         let data = {
@@ -44,22 +51,24 @@ export default {
 
           this.objectManager.removeAll();
           let result =   val
-          .map((coords, idx) => {
-              return {
-                "type": "Feature",
-                "id": idx,
-                "geometry": {
-                  "type": "Point",
-                  "id": idx,
-                  "coordinates": [coords[0], coords[1]]},
-                  "properties": {
-                    "balloonContent": false,
+          .map((coords, idx) => ({
+              "type": "Feature",
+              "id": idx,
+              "geometry": {
+                "type": "Point",
+                "coordinates": [coords[0], coords[1]]},
+                "properties": {
+                  "balloonContent": false,
 
-                    "clusterCaption" : idx,
-                    "hintContent": false,
-                  }
-              }
-      })
+                  "clusterCaption" : idx,
+                  "hintContent": false,
+                },
+                 "options": {
+ "iconLayout": 'default#image',
+                  "iconImageHref": Marker,
+                 }
+
+          }))
       console.log('result', result);
       data["features"] =  result
         this.objectManager.add(data);
@@ -73,15 +82,7 @@ export default {
     initMap(Map) {
       this.Map = Map
       this.objectManager = this.createObjectManager();
-      // let layoutBallon = this.createClusterBallonLayout()
       this.Map.geoObjects.add(this.objectManager);
-
-
-
-    //   this.cluster = this.createClusterer(layoutBallon)
-    //   let placemarks = this.driversCoords.map((coords, idx) => this.createPlacemark(coords, `text-${idx}`, idx))
-    //   this.cluster.add(placemarks)
-    //   this.Map.geoObjects.add(this.cluster)
     },
 
 
@@ -115,13 +116,8 @@ export default {
         return new ymaps.Clusterer({
             clusterDisableClickZoom: true,
             clusterOpenBalloonOnClick: true,
-            // Устанавливаем режим открытия балуна.
-            // В данном примере балун никогда не будет открываться в режиме панели.
             clusterBalloonPanelMaxMapArea: 0,
-            // По умолчанию опции балуна balloonMaxWidth и balloonMaxHeight не установлены для кластеризатора,
-            // так как все стандартные макеты имеют определенные размеры.
             clusterBalloonMaxHeight: 200,
-            // Устанавливаем собственный макет контента балуна.
             clusterBalloonContentLayout: customBalloonContentLayout
         });
     },
@@ -146,7 +142,6 @@ export default {
     },
     createPlacemark(coords, text, id) { //создание точки
         return new ymaps.Placemark(coords, {
-            // Устаналиваем данные, которые будут отображаться в балуне.
             balloonContentHeader: 'Заголовок метки №' + text,
             placemarkId: id,
             iconCaption: 'asd'
@@ -172,8 +167,18 @@ export default {
         this.count++;
         this.driversCoords = [
             [37.714929, 55.837369],
-            [37.74, 55.8522],
+           [37.74, 55.8522],
             [37.75, 55.837369],
+            [37.75, 55.937369],
+            [37.75, 55.437369],
+            [37.75, 55.337369],
+            [37.75, 55.537369],
+            [37.75, 55.037369],
+            [37.75, 55.37369],
+            [37.75, 56.837369],
+            [37.75, 59.837369],
+            [37.75, 58.837369],
+            [37.75, 59.837369],
         ]
     },
     prevCoords() {
@@ -181,7 +186,17 @@ export default {
         this.driversCoords = [
             [37.714929, 55.837369],
             [37.74, 55.85],
-            [37.75, 55.837369]
+            [37.75, 55.837369],
+            [37.75, 55.937369],
+            [37.75, 55.437369],
+            [37.75, 55.337369],
+            [37.75, 55.537369],
+            [37.75, 55.037369],
+            [37.75, 55.37369],
+            [37.75, 56.837369],
+            [37.75, 59.837369],
+            [37.75, 58.837369],
+            [37.75, 59.837369],
         ]
     },
   },
