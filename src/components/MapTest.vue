@@ -35,34 +35,35 @@ export default {
         // this.cluster.removeAll()
         // let placemarks = this.driversCoords.map((coords, idx) => this.createPlacemark(coords, `text-${idx}`, idx))
         // this.cluster.add(placemarks)
-
+        console.log('val');
+        if (!this.objectManager) return false
         let data = {
             "type": "FeatureCollection",
             "features": []
           }
 
           this.objectManager.removeAll();
-          let result =   this.driversCoords
+          let result =   val
           .map((coords, idx) => {
-            if (driver.location) {
               return {
-              "type": "Feature",
-              "id": idx,
-              "geometry": {
-                "type": "Point",
+                "type": "Feature",
                 "id": idx,
-                "coordinates": [coords[0], coords[1]]},
-                "properties": {
-                  "balloonContent": false,
+                "geometry": {
+                  "type": "Point",
+                  "id": idx,
+                  "coordinates": [coords[0], coords[1]]},
+                  "properties": {
+                    "balloonContent": false,
 
-                  "clusterCaption" : idx,
-                  "hintContent": false,
-                }
+                    "clusterCaption" : idx,
+                    "hintContent": false,
+                  }
               }
-            }
       })
+      console.log('result', result);
       data["features"] =  result
         this.objectManager.add(data);
+        this.Map.geoObjects.add(this.objectManager);
   }
   },
 
